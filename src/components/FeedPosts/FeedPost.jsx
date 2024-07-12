@@ -3,16 +3,16 @@ import PostHeader from "./PostHeader"
 import PostFooter from "./PostFooter"
 
 
-function FeedPost() {
+function FeedPost({img,username,avatar}) {
   return (<>
 
-    <PostHeader />
+    <PostHeader username={username} avatar={avatar}/>
 
-    <Box>
-        <Image src="/img1.png" alt="user profile pic" />
+    <Box my ={2} borderRadius={4} overflow={"hidden"}>
+        <Image src={img} alt={username} />
     </Box>
 
-    <PostFooter />
+    <PostFooter username={username} />
   </>
   )
 }
