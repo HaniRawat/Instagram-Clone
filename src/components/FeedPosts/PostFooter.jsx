@@ -3,7 +3,7 @@ import { useState } from "react"
 import { CommentLogo, NotificationsLogo,UnlikeLogo } from "../../assets/constants";
 
 
-function PostFooter({username}) {
+function PostFooter({username, isProfilePage}) {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(1000);
 
@@ -17,7 +17,7 @@ function PostFooter({username}) {
     }
   }
   return (
-    <Box mb={10}>
+    <Box mb={10} marginTop={"auto"}>
       <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={4}>
         <Box onClick={handleLike}
         cursor={"pointer"} fontSize={18}>
@@ -33,7 +33,9 @@ function PostFooter({username}) {
         {likes} likes
       </Text>
 
-      <Text fontWeight={700} fontSize={"sm"}>
+      {!isProfilePage && (
+        <>
+        <Text fontWeight={700} fontSize={"sm"}>
       {username} {" "}
         <Text as='span' fontWeight={400}>
           Feeling good
@@ -42,6 +44,8 @@ function PostFooter({username}) {
           View all 1,000 comments
         </Text>
       </Text>
+        </>
+      )}
 
       <Flex alignItems={"center"} gap={2} justifyContent={"space-between"} w={"full"}>
 
