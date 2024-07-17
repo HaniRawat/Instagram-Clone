@@ -7,7 +7,6 @@ function Login() {
     const [inputs, setInputs] = useState({
         email:'',
         password: '',
-        confirmPassword:''
     })
     const {loading,error,login} = useLogin()
   return (
@@ -31,7 +30,7 @@ function Login() {
         />
 
         {error && (
-            <Alert status="error" fontSize={13} borderRadius={4}>
+            <Alert status="error" fontSize={13} borderRadius={4} p={2}>
                 <AlertIcon fontSize={12} />
                 {error.message}
             </Alert>
