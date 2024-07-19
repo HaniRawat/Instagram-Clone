@@ -65,7 +65,7 @@ const CreatePost = () => {
 					borderRadius={6}
 					p={2}
 					w={{ base: 10, md: "full" }}
-					justifyContent={{ base: "center", md: "flex-start" }}
+					justifyContent={{ base: "center", md: "flex-start" }} onclick={onOpen}
 				>
 					<CreatePostLogo />
 					<Box display={{ base: "none", md: "block" }}>Create</Box>
@@ -91,7 +91,7 @@ const CreatePost = () => {
 							<Flex mt={5} w={"full"} position={"relative"} justifyContent={"center"} >
 
 							<Image src={selectedFile} alt="Selected Img" />
-							<CloseButton position={"absolute"} top={2} right={2} onClick={() => {setSelectedFile("")}} />
+							<CloseButton position={"absolute"} top={2} right={2} onClick={() => {setSelectedFile(null)}} />
 							</Flex>
 						)}
 					</ModalBody>
@@ -114,7 +114,8 @@ function useCreatePost(){
 	const authUser = useAuthStore(state => state.user)
 	const createPost = usePostStore(state => state.createPost)
 	const addPost = useUserProfileStore(state => state.addPost)
-	const {pathName} = useLocation()
+	const userProfile = useUserProfileStore((state) => state.userProfile)
+	const {pathname} = useLocation()
 
 	const handleCreatePost = async(selectedFile,caption) => {
 		if(isLoading) return;
@@ -141,10 +142,10 @@ function useCreatePost(){
 
 		newPost.imageURL = downloadURL
 
-		// if (userProfile.uid === authUser.uid) 
+		if (userProfile.uid === authUser.uid) 
 			createPost({...newPost,id:postDocRef.id})
 
-		// if (pathname !== "/" && userProfile.uid === authUser.uid) 
+		if (pathname !== "/" && userProfile.uid === authUser.uid) 
 			addPost({...newPost, id: postDocRef.id})
 
 		showToast("Success", "Post created successfully","success")
