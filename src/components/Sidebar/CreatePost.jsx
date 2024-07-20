@@ -30,7 +30,7 @@ import { firestore, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const CreatePost = () => {
-	const {isOpen, onClose, onOpen} = useDisclosure()
+	const {isOpen,onOpen, onClose} = useDisclosure()
 	const [caption , setCaption] = useState("")
 	const imageRef = useRef(null)
 	const {handleImageChange, selectedFile, setSelectedFile} = usePreviewImg()
@@ -65,7 +65,7 @@ const CreatePost = () => {
 					borderRadius={6}
 					p={2}
 					w={{ base: 10, md: "full" }}
-					justifyContent={{ base: "center", md: "flex-start" }} onclick={onOpen}
+					justifyContent={{ base: "center", md: "flex-start" }} onClick={onOpen}
 				>
 					<CreatePostLogo />
 					<Box display={{ base: "none", md: "block" }}>Create</Box>
