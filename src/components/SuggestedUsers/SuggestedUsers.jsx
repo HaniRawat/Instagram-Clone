@@ -27,9 +27,9 @@ function SuggestedUsers() {
     </Flex>
     )}
 
-    {suggestedUsers.map((user) => {
-      <SuggestedUser user = {user} key={user.id} />
-    })}
+    {suggestedUsers.map((user) => (
+				<SuggestedUser user={user} key={user.id} />
+			))}
 
     <Box fontSize={12} color={"gray.500"} mt={5} alignSelf={"start"}>
     © 2024 Built By{" "}
