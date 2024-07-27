@@ -1,7 +1,7 @@
 import {
 	Box,
 	Button,
-	CloseButton,
+	CloseButton,Checkbox,
 	Flex,
 	Image,
 	Input,
@@ -28,6 +28,7 @@ import { useLocation } from "react-router-dom";
 import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
 import { firestore, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import useStore from "../../store/FilterComment";
 
 const CreatePost = () => {
 	const {isOpen,onOpen, onClose} = useDisclosure()
@@ -37,11 +38,14 @@ const CreatePost = () => {
 	const showToast = useShowToast()
 	const {isLoading, handleCreatePost} = useCreatePost()
 
+	const {filterComments, setFilterComments} = useStore()
+
 	const handlePostCreation = async() => {
 		try {
 			await handleCreatePost(selectedFile,caption)
 			onClose()
 			setCaption("")
+			// setFilterComments(false)
 			setSelectedFile(null)
 		} catch (error) {
 			showToast("Error",error.message, "error")
@@ -83,10 +87,16 @@ const CreatePost = () => {
 
 						<Input type='file' hidden ref={imageRef} onChange={handleImageChange} />
 
+						
+
+						<Flex gap={3}>
 						<BsFillImageFill onClick={() => imageRef.current.click()}
 							style={{ marginTop: "15px", marginLeft: "5px", cursor: "pointer" }}
 							size={16}
 						/>
+
+						<Checkbox colorScheme="orange" mt={3} onChange={(e) => setFilterComments(e.target.checked)} isChecked={filterComments} >Filter Comments</Checkbox>
+						</Flex>
 						{selectedFile && (
 							<Flex mt={5} w={"full"} position={"relative"} justifyContent={"center"} >
 
@@ -118,9 +128,11 @@ function useCreatePost(){
 	const {pathname} = useLocation()
 
 	const handleCreatePost = async(selectedFile,caption) => {
+
 		if(isLoading) return;
 		if(!selectedFile) throw new Error('Please select an image')
 		setIsLoading(true)
+
 	const newPost = {
 		caption: caption,
 		likes:[],
